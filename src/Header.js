@@ -3,11 +3,27 @@ import "./Header.css";
 import SearchIcon from "@mui/icons-material/SearchSharp";
 import ShoppingCart from "@mui/icons-material/ShoppingCartOutlined";
 import { Link } from "react-router-dom";
+import { useStateValue } from "./StateProvider";
+import { signOut } from "firebase/auth";
+import { auth } from "./firebase";
 
 function Header() {
+  //eslint-disable-next-line
+  const [{ basket, user }, dispatch] = useStateValue();
+
+  const handleAuthentication = () => {
+    if (user) {
+      signOut(auth)
+        .then(() => {
+          console.log("sign out was successful");
+        })
+        .catch((error) => console.log(error));
+    }
+  };
+
   return (
-    <div>
-      <div className="h-14 flex items-center bg-[#131921] relative sticky top-0 z-[100] py-6">
+    <div className="sticky top-0 ">
+      <div className="h-14 flex items-center bg-[#131921] z-[100] py-6">
         <Link to="/">
           <img
             className="w-[100px] object-contain mt-[18px] mx-[20px]"
@@ -21,18 +37,25 @@ function Header() {
           <SearchIcon className="bg-[#cd9042] p-1 w-32 h-32" />
         </div>
         <div className="header__nav flex justify-between">
-          <div className="header__option flex flex-col ml-2.5 mr-2.5">
+          <Link to={!user && "/Login"}>
+            <div
+              className="header__option flex flex-col ml-2.5 mr-2.5"
+              onClick={handleAuthentication}
+            >
+              <span className="header__optionLineOne text-white text-sm">
+                Hello Guest
+              </span>
+              <span className="header__optionLineTwo text-white">
+                {user ? "Sign Out" : "Sign In"}
+              </span>
+            </div>
+          </Link>
+          {/* <div className="header__option flex flex-col ml-2.5 mr-2.5">
             <span className="header__optionLineOne text-white text-sm">
               Hello Guest
             </span>
             <span className="header__optionLineTwo text-white">Sign In</span>
-          </div>
-          <div className="header__option flex flex-col ml-2.5 mr-2.5">
-            <span className="header__optionLineOne text-white text-sm">
-              Hello Guest
-            </span>
-            <span className="header__optionLineTwo text-white">Sign In</span>
-          </div>
+          </div> */}
           <div className="header__option flex flex-col ml-2.5 mr-2.5">
             <span className="header__optionLineOne text-white text-sm">
               Returns
@@ -42,7 +65,7 @@ function Header() {
           <Link to="/checkout" className="flex items-center">
             <div className="header__optionBasket">
               <ShoppingCart className="cart" />
-              <span className="text-white mr-5">0</span>
+              <span className="text-white mr-5">{basket?.length}</span>
             </div>
           </Link>
         </div>
