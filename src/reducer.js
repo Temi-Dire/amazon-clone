@@ -1,6 +1,6 @@
 export const initialState = {
   basket: [],
-  user: null,
+  // user: null,
 };
 
 const reducer = (state, action) => {
@@ -27,11 +27,11 @@ const reducer = (state, action) => {
       }
       //And now finally we display the new basket
       return { ...state, basket: newBasket };
-    case "SET_USER":
-      return {
-        ...state,
-        user: action.user,
-      };
+    // case "SET_USER":
+    //   return {
+    //     ...state,
+    //     user: action.user,
+    //   };
 
     default:
       return state;

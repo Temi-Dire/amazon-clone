@@ -4,22 +4,22 @@ import SearchIcon from "@mui/icons-material/SearchSharp";
 import ShoppingCart from "@mui/icons-material/ShoppingCartOutlined";
 import { Link } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
-import { signOut } from "firebase/auth";
-import { auth } from "./firebase";
+// import { signOut } from "firebase/auth";
+// import { auth } from "./firebase";
 
 function Header() {
   //eslint-disable-next-line
-  const [{ basket, user }, dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
 
-  const handleAuthentication = () => {
-    if (user) {
-      signOut(auth)
-        .then(() => {
-          console.log("sign out was successful");
-        })
-        .catch((error) => console.log(error));
-    }
-  };
+  // const handleAuthentication = () => {
+  //   if (user) {
+  //     signOut(auth)
+  //       .then(() => {
+  //         console.log("sign out was successful");
+  //       })
+  //       .catch((error) => console.log(error));
+  //   }
+  // };
 
   return (
     <div className="sticky top-0 ">
@@ -37,17 +37,15 @@ function Header() {
           <SearchIcon className="bg-[#cd9042] p-1 w-32 h-32" />
         </div>
         <div className="header__nav flex justify-between">
-          <Link to={!user && "/Login"}>
+          <Link to={"/Login"}>
             <div
               className="header__option flex flex-col ml-2.5 mr-2.5"
-              onClick={handleAuthentication}
+              // onClick={handleAuthentication}
             >
               <span className="header__optionLineOne text-white text-sm">
                 Hello Guest
               </span>
-              <span className="header__optionLineTwo text-white">
-                {user ? "Sign Out" : "Sign In"}
-              </span>
+              <span className="header__optionLineTwo text-white">SIGN IN</span>
             </div>
           </Link>
           {/* <div className="header__option flex flex-col ml-2.5 mr-2.5">
