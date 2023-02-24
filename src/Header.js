@@ -43,7 +43,7 @@ function Header() {
               // onClick={handleAuthentication}
             >
               <span className="header__optionLineOne text-white text-sm">
-                Hello Guest
+                Hello Dire
               </span>
               <span className="header__optionLineTwo text-white">SIGN IN</span>
             </div>
